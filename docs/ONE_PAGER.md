@@ -1,40 +1,44 @@
 # Knight to Sky
 
-Platformer 2D infinito sviluppato in **C++17 con raylib**: guida un cavaliere tra piattaforme che scorrono verso il basso, sfrutta il doppio salto e raccogli bonus per aumentare il punteggio. Ogni partita propone nuove disposizioni di piattaforme e oggetti, con difficoltà costante e senza un traguardo finale.
+An endless 2D platformer built with **C++17 and raylib**. Guide a knight across platforms scrolling downward, use double jumps to stay in the air, and collect bonuses to increase your score. Each run introduces new platform and pickup arrangements, with constant difficulty and no finish line.
 
-## Come si gioca
+## About the project
 
-La partita comincia a mezz'aria: il primo salto attiva lo scorrimento e il punteggio legato alla sopravvivenza. Osserva gli appoggi, correggi la traiettoria anche in volo e scegli quando deviare per raccogliere un oggetto. Atterrare ripristina entrambi i salti; il secondo può prolungare la salita o interrompere una caduta. Uscendo completamente da un bordo laterale ricompari dal lato opposto.
+Knight to Sky is a **group project** and was our **first experience developing a game entirely in C++**. It brought together character movement, platform generation, collectible effects, scoring, and audiovisual feedback in a playable game.
 
-Puoi attraversare le piattaforme dal basso e atterrarci durante la discesa. Le piattaforme **normali** offrono un appoggio, quelle **mobili** si spostano orizzontalmente e quelle **fragili** svaniscono dopo il contatto, una volta avviato lo scorrimento. Nuove piattaforme vengono generate mentre quelle precedenti escono dall'area di gioco.
+## How to play
 
-Quando precipiti sotto lo schermo la partita termina e viene mostrato il punteggio finale. Premi Invio per tornare alla schermata iniziale, poi nuovamente Invio per ripartire.
+Each run begins in midair. Your first jump starts the downward scrolling and survival scoring. Watch for landing opportunities, adjust your trajectory in the air, and decide when to take a detour for a pickup. Landing restores both jumps; the second jump can extend your ascent or interrupt a fall. Moving completely beyond either side of the screen brings you back from the opposite side.
 
-## Comandi
+You can pass through platforms from below and land on them while descending. **Normal platforms** provide a landing surface, **moving platforms** shift horizontally, and **breakable platforms** fade away after contact once scrolling has started. New platforms appear as previous ones leave the play area.
 
-| Tasto | Azione |
+Falling below the screen ends the run and displays your final score. Press Enter to return to the opening screen, then Enter again to start another attempt.
+
+## Controls
+
+| Key | Action |
 |---|---|
-| A / D oppure frecce sinistra / destra | Movimento orizzontale |
-| Spazio | Salto, fino a due prima di atterrare |
-| Invio | Avvio dalla schermata iniziale; ritorno al menu dopo il game over |
+| A / D or Left / Right arrows | Move horizontally |
+| Space | Jump; up to two jumps before landing |
+| Enter | Start from the opening screen; return to the menu after game over |
 
-## Punteggio e oggetti
+## Scoring and pickups
 
-La sopravvivenza assegna **10 punti al secondo** dal primo salto. Gli oggetti raccolti possono aiutarti oppure rendere più difficile il controllo del cavaliere.
+Survival awards **10 points per second** after the first jump. Pickups can help you score or make the knight harder to control.
 
-| Oggetto | Effetto |
+| Pickup | Effect |
 |---|---|
-| Moneta | +100 punti |
-| Moltiplicatore | Punti da tempo e monete ×2 per 15 secondi |
-| Molla | Velocità iniziale verso l'alto del prossimo salto aumentata del 60%; si consuma all'uso |
-| Rallentamento | Velocità orizzontale ridotta al 60% per 12 secondi |
-| Inversione | Comandi sinistra e destra scambiati per 5 secondi |
+| Coin | +100 points |
+| Score multiplier | Doubles survival and coin points for 15 seconds |
+| Spring | Increases the next jump's initial upward speed by 60%; consumed on use |
+| Slow | Reduces horizontal speed to 60% for 12 seconds |
+| Reverse controls | Swaps left and right input for 5 seconds |
 
-Effetti temporanei diversi possono coesistere. Raccogliere nuovamente lo stesso effetto ne ripristina la durata senza aumentarne l'intensità. L'interfaccia mostra punteggio, durate residue e messaggi di raccolta.
+Different timed effects can coexist. Collecting the same effect again refreshes its duration without increasing its strength. The interface displays your score, remaining effect durations, and pickup messages.
 
-## Compilazione e avvio
+## Build and run
 
-Servono **CMake 3.20 o superiore**, un compilatore compatibile con C++17, **Ninja** per i comandi seguenti e un'installazione di **raylib** compatibile con il compilatore. Esegui dalla cartella principale della repository:
+You need **CMake 3.20 or later**, a C++17 compiler, **Ninja** for the commands below, and a **raylib** installation compatible with your compiler. Run these commands from the repository root:
 
 ```powershell
 cmake -S . -B build -G Ninja -DRAYLIB_DIR="C:/raylib/w64devkit/x86_64-w64-mingw32"
@@ -43,12 +47,4 @@ cd build
 .\cpp-raylib-platformer.exe
 ```
 
-L'esempio è per Windows: adatta il percorso di raylib alla tua installazione e rendi disponibili gli strumenti nel PATH. Se CMake trova già raylib, puoi omettere `-DRAYLIB_DIR=...`. La compilazione copia gli asset accanto all'eseguibile: avvia il gioco da quella cartella. Su altri sistemi il nome dell'eseguibile e la configurazione degli strumenti possono variare.
-
-## Stato e limiti
-
-**Implementato nel codice:** movimento, generazione continua, tre tipi di piattaforme, cinque oggetti, punteggio, schermate iniziale e finale, animazioni ed effetti audio.
-
-**Da verificare in gioco:** compilazione sulle diverse piattaforme, collisioni, raggiungibilità dei percorsi e resa audiovisiva. Il caricamento della musica usa un percorso con maiuscole diverse dalla cartella presente; sono inoltre ancora disegnati indicatori di debug. Titolo finestra e schermata iniziale differiscono dal titolo del progetto.
-
-**Pianificato:** nessuna funzionalità futura confermata. Analisi statica e discrepanze sono documentate nel registro delle evidenze.
+This example targets Windows. Adjust the raylib path to match your installation and make sure the build tools are available in your PATH. If CMake already finds raylib, omit `-DRAYLIB_DIR=...`. The build copies assets next to the executable, so launch the game from that directory. Executable names and tool configuration may differ on other systems.
