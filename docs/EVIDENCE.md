@@ -4,7 +4,7 @@
 
 Analisi statica di sorgenti, configurazione CMake, README e inventario degli asset, con conferme del proprietario raccolte in conversazione. Nessuna compilazione, esecuzione o sessione di gioco effettuata. “Implementato” indica logica presente e collegata nel codice, non verifica del comportamento in gioco. AGENTS.md e docs/DESIGN_BRIEF.md non risultano presenti nel checkout; sono state applicate le istruzioni AGENTS.md fornite in chat.
 
-ONE_PAGER.md è in inglese su richiesta esplicita. La lunghezza è verificata come testo Markdown; non è stata verificata un'impaginazione effettiva su una pagina.
+ONE_PAGER.md è stato riscritto in italiano come presentazione utilizzabile per il README GitHub, su richiesta del 17 ottobre 2026. La lunghezza è verificata come testo Markdown; non è stata verificata un'impaginazione effettiva su una pagina.
 
 ## Conferme fornite dall'utente
 
@@ -45,10 +45,19 @@ I percorsi sono relativi a questo documento. I dettagli numerici descrivono i va
 
 ## Discrepanze e verifiche aperte
 
-1. **HUD richiesto contro codice:** l'utente chiede di considerare rimossi i contatori. PlayableCharacter::Draw contiene ancora “Jumps” e, nel ramo con texture, “Vel Y”. Il one-pager li esclude dalla presentazione prevista e dichiara la discrepanza; nessuna modifica al gioco è stata effettuata.
+1. **HUD richiesto contro codice:** l'utente chiede di considerare rimossi i contatori. PlayableCharacter::Draw contiene ancora “Jumps” e, nel ramo con texture, “Vel Y”. Il one-pager segnala la presenza degli indicatori di debug; nessuna modifica al gioco è stata effettuata.
 2. **Titolo e testi UI:** il titolo confermato è Knight to Sky; BeginScene mostra “JUMP!” e Game::Game usa “Game” come titolo finestra. “PRESS ENTER TO RESTART!” porta alla schermata iniziale: il flusso è intenzionale, ma il testo non esplicita il secondo Enter.
 3. **Durata del moltiplicatore:** il commento in [ScoreMultiplier.h](../src/Pickups/ScoreMultiplier.h) parla di 10 secondi, mentre PickupManager::Defaults passa 15 secondi. Il documento usa il valore eseguibile approvato.
 4. **Raggiungibilità:** PlatformsManager::GenerateOne contiene un commento sulla garanzia di salti possibili, ma playerMaxJumpHorizontal deriva da una velocità verticale negativa. Il calcolo usa anche moveSpeed = 150, contro 200 in Character. Non si assume quindi che le sequenze siano sempre percorribili; occorre verificarle considerando scrolling, doppio salto, wrap e piattaforme mobili.
 5. **Dipendenza dai frame:** MovingPlatform::UpdatePosition aggiunge cos(theta) alla posizione orizzontale ogni frame senza scalare lo spostamento per dt. Va verificato a frame rate differenti.
 6. **Percorso musica:** [GameScene.h](../src/Scene/GameScene.h) usa assets/audio/background.mp3; il percorso presente è assets/Audio/background.mp3. Possibile problema su filesystem sensibili alle maiuscole.
 7. **Limiti dell'analisi:** nessuna prova di bilanciamento, durata media delle run, divertimento, accessibilità, stabilità o compatibilità multipiattaforma. Non sono disponibili risultati di playtest, target audience, design pillars o milestone di rilascio; non vengono inventati.
+
+## Revisione per uso README — 17 ottobre 2026
+
+- Riletti il one-pager esistente, README, CMakeLists.txt e i sorgenti pertinenti a controlli, scene, generazione, raccolta ed effetti. `.codex/AGENTS.md` non è presente nel checkout; applicate le istruzioni AGENTS.md fornite in chat.
+- Le conferme storiche sopra riportate provengono dal registro preesistente e non sono state raccolte nuovamente in questa revisione.
+- Istruzioni di compilazione ricavate da [CMakeLists.txt](../CMakeLists.txt): `cmake_minimum_required`, `CMAKE_CXX_STANDARD`, `find_package`, `pkg_check_modules`, fallback `RAYLIB_DIR`, `add_executable` e copia `POST_BUILD`. Il percorso Windows è quello configurato in [.vscode/settings.json](../.vscode/settings.json), proprietà `cmake.configureSettings.RAYLIB_DIR`; va adattato alla macchina dell'utente. I comandi non sono stati eseguiti e non costituiscono una compilazione verificata.
+- Le istruzioni di avvio richiedono come directory corrente quella dell'eseguibile perché i caricamenti degli asset usano percorsi relativi. Per generatori con più configurazioni la cartella effettiva può essere una sottocartella della build; l'esempio fornito usa Ninja.
+- Il documento rimane in `docs/ONE_PAGER.md`; il README principale e il codice del gioco non vengono modificati. Il testo non contiene link relativi dipendenti dalla sua posizione, per consentirne il riuso nella radice della repository.
+- Nessuna compilazione o esecuzione del gioco effettuata. Nessuna verifica di impaginazione su una pagina fisica.

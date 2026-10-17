@@ -1,44 +1,54 @@
 # Knight to Sky
 
-## Pitch
+Platformer 2D infinito sviluppato in **C++17 con raylib**: guida un cavaliere tra piattaforme che scorrono verso il basso, sfrutta il doppio salto e raccogli bonus per aumentare il punteggio. Ogni partita propone nuove disposizioni di piattaforme e oggetti, con difficoltà costante e senza un traguardo finale.
 
-Knight to Sky is an endless 2D platformer built with C++ and raylib. The player guides a knight between platforms while the world scrolls downward, using manual jumps and collecting score bonuses. There is no finish line: the objective is to survive and increase the run's score. Difficulty stays constant, with new platform arrangements and pickup placements generated throughout each attempt.
+## Come si gioca
 
-## Player Experience
+La partita comincia a mezz'aria: il primo salto attiva lo scorrimento e il punteggio legato alla sopravvivenza. Osserva gli appoggi, correggi la traiettoria anche in volo e scegli quando deviare per raccogliere un oggetto. Atterrare ripristina entrambi i salti; il secondo può prolungare la salita o interrompere una caduta. Uscendo completamente da un bordo laterale ricompari dal lato opposto.
 
-Each run begins with the knight in midair, with two jumps available. The first jump activates downward scrolling and time-based scoring. From that point, the player must keep finding landing opportunities while deciding whether to pursue a pickup or preserve a safer route.
+Puoi attraversare le piattaforme dal basso e atterrarci durante la discesa. Le piattaforme **normali** offrono un appoggio, quelle **mobili** si spostano orizzontalmente e quelle **fragili** svaniscono dopo il contatto, una volta avviato lo scorrimento. Nuove piattaforme vengono generate mentre quelle precedenti escono dall'area di gioco.
 
-Landing restores both jumps. The second jump can extend an ascent or interrupt a fall, giving the player another opportunity to adjust a trajectory. Horizontal movement remains available in the air, and leaving one side of the screen brings the knight back from the opposite side.
+Quando precipiti sotto lo schermo la partita termina e viene mostrato il punteggio finale. Premi Invio per tornare alla schermata iniziale, poi nuovamente Invio per ripartire.
 
-The HUD shows score and remaining durations for timed effects. Brief control instructions introduce movement and jumping, while pickup messages identify collected rewards or penalties.
+## Comandi
 
-## Core Loop
+| Tasto | Azione |
+|---|---|
+| A / D oppure frecce sinistra / destra | Movimento orizzontale |
+| Spazio | Salto, fino a due prima di atterrare |
+| Invio | Avvio dalla schermata iniziale; ritorno al menu dopo il game over |
 
-1. Read the next platform positions and nearby pickups.
-2. Move horizontally and time the first and second jumps.
-3. Land to restore both jumps and prepare the next move.
-4. Collect coins and bonuses while avoiding harmful pickups.
-5. Continue surviving to earn points until a fall ends the run.
-6. Review the final score, press Enter to return to the opening screen, then press Enter again to begin a new attempt.
+## Punteggio e oggetti
 
-## Key Mechanics
+La sopravvivenza assegna **10 punti al secondo** dal primo salto. Gli oggetti raccolti possono aiutarti oppure rendere più difficile il controllo del cavaliere.
 
-**Movement and jumping:** A/D or the arrow keys move the knight; Space triggers a jump. Two jumps are available between landings. Platforms can be passed through from below and landed on while descending.
+| Oggetto | Effetto |
+|---|---|
+| Moneta | +100 punti |
+| Moltiplicatore | Punti da tempo e monete ×2 per 15 secondi |
+| Molla | Velocità iniziale verso l'alto del prossimo salto aumentata del 60%; si consuma all'uso |
+| Rallentamento | Velocità orizzontale ridotta al 60% per 12 secondi |
+| Inversione | Comandi sinistra e destra scambiati per 5 secondi |
 
-**Three platform types:** Solid platforms provide landing surfaces, moving platforms shift horizontally, and breakable platforms fade and disappear after contact. New platforms replace those that descend beyond the play area.
+Effetti temporanei diversi possono coesistere. Raccogliere nuovamente lo stesso effetto ne ripristina la durata senza aumentarne l'intensità. L'interfaccia mostra punteggio, durate residue e messaggi di raccolta.
 
-**Score:** Survival awards 10 points per second after the first jump. Coins award 100 points each. A score multiplier doubles both sources for 15 seconds.
+## Compilazione e avvio
 
-**Jump boost:** A spring pickup increases the next successful jump's upward velocity by 60%. The boost is consumed by that jump rather than lasting for a timed interval.
+Servono **CMake 3.20 o superiore**, un compilatore compatibile con C++17, **Ninja** per i comandi seguenti e un'installazione di **raylib** compatibile con il compilatore. Esegui dalla cartella principale della repository:
 
-**Penalties:** Slow reduces horizontal movement speed to 60% for 12 seconds. Reverse swaps left and right input for five seconds. Different timed effects can coexist; collecting the same effect refreshes its duration without increasing its strength.
+```powershell
+cmake -S . -B build -G Ninja -DRAYLIB_DIR="C:/raylib/w64devkit/x86_64-w64-mingw32"
+cmake --build build
+cd build
+.\cpp-raylib-platformer.exe
+```
 
-**Constant scrolling:** Platforms descend at 100 pixels per second and pickups at 125. These approved speeds remain fixed throughout a run.
+L'esempio è per Windows: adatta il percorso di raylib alla tua installazione e rendi disponibili gli strumenti nel PATH. Se CMake trova già raylib, puoi omettere `-DRAYLIB_DIR=...`. La compilazione copia gli asset accanto all'eseguibile: avvia il gioco da quella cartella. Su altri sistemi il nome dell'eseguibile e la configurazione degli strumenti possono variare.
 
-## My Contribution
+## Stato e limiti
 
-I worked as a designer and implemented the character and assets. My contribution covers these areas; the platform generation, pickup systems, scoring, audio systems, and scene management described above are presented as project features without assigning their authorship to me.
+**Implementato nel codice:** movimento, generazione continua, tre tipi di piattaforme, cinque oggetti, punteggio, schermate iniziale e finale, animazioni ed effetti audio.
 
-## Project Status
+**Da verificare in gioco:** compilazione sulle diverse piattaforme, collisioni, raggiungibilità dei percorsi e resa audiovisiva. Il caricamento della musica usa un percorso con maiuscole diverse dalla cartella presente; sono inoltre ancora disegnati indicatori di debug. Titolo finestra e schermata iniziale differiscono dal titolo del progetto.
 
-Repository inspection supports the implemented movement, platform generation, pickup effects, scoring, and scene flow. Endless play, constant difficulty, the midair opening, and current tuning are confirmed design decisions. Jump and velocity debug readouts are excluded from the intended presentation, although rendering code remains. Runtime behaviour, generated-route reachability, collision feel, and audiovisual presentation still require in-game verification. No additional future features are confirmed.
+**Pianificato:** nessuna funzionalità futura confermata. Analisi statica e discrepanze sono documentate nel registro delle evidenze.
